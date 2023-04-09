@@ -13,7 +13,7 @@ HL2SDK_OB_VALVE = ../../../hl2sdk-ob-valve
 HL2SDK_L4D = ../../../hl2sdk-l4d
 HL2SDK_L4D2 = ../../../hl2sdk-l4d2
 HL2SDK_CSGO = ../../../hl2sdk-csgo
-MMSOURCE19 = ../../../mmsource-1.9
+MMSOURCE19 = ../../../metamod-source-mmsource-1.10.4
 
 #####################################
 ### EDIT BELOW FOR OTHER PROJECTS ###
@@ -22,7 +22,7 @@ MMSOURCE19 = ../../../mmsource-1.9
 PROJECT = sample
 
 #Uncomment for Metamod: Source enabled extension
-#USEMETA = true
+USEMETA = true
 
 OBJECTS = smsdk_ext.cpp extension.cpp
 
@@ -40,6 +40,7 @@ CPP_OSX = clang
 ##########################
 ### SDK CONFIGURATIONS ###
 ##########################
+ENGINE = css
 
 override ENGSET = false
 
@@ -83,7 +84,7 @@ ifeq "$(ENGINE)" "original"
 	INCLUDE += -I$(HL2SDK)/public/dlls
 	METAMOD = $(MMSOURCE19)/core-legacy
 else
-	INCLUDE += -I$(HL2SDK)/public/game/server
+	INCLUDE += -I$(HL2SDK)/game/server
 	METAMOD = $(MMSOURCE19)/core
 endif
 
@@ -112,7 +113,7 @@ endif
 INCLUDE += -I. -I.. -Isdk -I$(SMSDK)/public -I$(SMSDK)/public/sourcepawn
 
 ifeq "$(USEMETA)" "true"
-	LINK_HL2 = $(HL2LIB)/tier1_i486.a $(LIB_PREFIX)vstdlib$(LIB_SUFFIX) $(LIB_PREFIX)tier0$(LIB_SUFFIX)
+	LINK_HL2 = $(HL2LIB)/tier1_i486.a $(LIB_PREFIX)vstdlib_srv$(LIB_SUFFIX) $(LIB_PREFIX)tier0_srv$(LIB_SUFFIX)
 	ifeq "$(ENGINE)" "csgo"
 		LINK_HL2 += $(HL2LIB)/interfaces_i486.a
 	endif
@@ -120,7 +121,7 @@ ifeq "$(USEMETA)" "true"
 	LINK += $(LINK_HL2)
 
 	INCLUDE += -I$(HL2PUB) -I$(HL2PUB)/engine -I$(HL2PUB)/tier0 -I$(HL2PUB)/tier1 -I$(METAMOD) \
-		-I$(METAMOD)/sourcehook 
+		-I$(METAMOD)/sourcehook -I$(HL2SDK)/game/shared
 	CFLAGS += -DSE_EPISODEONE=1 -DSE_DARKMESSIAH=2 -DSE_ORANGEBOX=3 -DSE_BLOODYGOODTIME=4 -DSE_EYE=5 \
 		-DSE_CSS=6 -DSE_ORANGEBOXVALVE=7 -DSE_LEFT4DEAD=8 -DSE_LEFT4DEAD2=9 -DSE_ALIENSWARM=10 \
 		-DSE_PORTAL2=11 -DSE_CSGO=12
